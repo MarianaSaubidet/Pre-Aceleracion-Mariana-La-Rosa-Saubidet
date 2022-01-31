@@ -18,7 +18,6 @@ import java.util.List;
 
 @Getter
 @Setter
-
 public class MovieEntity {
 
     @Id
@@ -39,6 +38,7 @@ public class MovieEntity {
     // @JoinColumn(name = "genre_id", insertable = false, updatable = false)
     // private GenreEntity genre;
 
+
     //TABLA INTERMEDIA MOVIES & CHARACTERS
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
     @JoinTable(name = "movie_chars",
@@ -57,18 +57,22 @@ public class MovieEntity {
     //SOFT DELETE
     private boolean deleted = Boolean.FALSE;
 
+    //ADD CHARACTER
     public void addCharacter(CharacterEntity character) {
         this.characters.add(character);
     }
 
+    //REMOVE CHARACTER
     public void removeCharacter(CharacterEntity character) {
         this.characters.remove(character);
     }
 
+    // ADD GENRE
     public void addGenre(GenreEntity genre) {
         this.genres.add(genre);
     }
 
+    //REMOVE GENRE
     public void removeGenre(GenreEntity genre) {
         this.genres.remove(genre);
     }

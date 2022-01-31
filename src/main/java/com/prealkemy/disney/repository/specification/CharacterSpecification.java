@@ -57,8 +57,7 @@ public class CharacterSpecification {
                             criteriaBuilder.desc(root.get(orderByField))
             );
 
-            //
-
+            // DEVUELVE UNA LISTA
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

@@ -7,7 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-
 public class MovieDTO {
     private Long id;
     private String image;

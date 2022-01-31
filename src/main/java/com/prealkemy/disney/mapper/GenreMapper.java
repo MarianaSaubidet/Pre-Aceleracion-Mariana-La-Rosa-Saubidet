@@ -2,6 +2,7 @@ package com.prealkemy.disney.mapper;
 
 import com.prealkemy.disney.dto.GenreDTO;
 import com.prealkemy.disney.entity.GenreEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -9,6 +10,9 @@ import java.util.List;
 
 @Component
 public class GenreMapper {
+
+    @Autowired
+    private MovieMapper movieMapper;
 
     public GenreEntity genreDTO2Entity(GenreDTO dto) {
         GenreEntity genreEntity = new GenreEntity();

@@ -50,7 +50,7 @@ public class MovieSpecification {
             );
 
 
-            //RETURN
+            //RETURN PREDICATE
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }
