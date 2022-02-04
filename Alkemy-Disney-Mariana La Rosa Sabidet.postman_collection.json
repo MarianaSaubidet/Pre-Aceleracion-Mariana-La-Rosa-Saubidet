@@ -55,7 +55,7 @@
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "signup",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -212,7 +212,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n     \"name\": \"Mickey\",\n    \"image\": \"mic\",\n    \"age\": 34,\n    \"weight\": 55.5,\n    \"biography\": \"It the main character\"\n}",
+					"raw": "{\n     \"name\": \"Mickey\",\n    \"image\": \"/usr/tmp/MickeyMouse.jpg\",\n    \"age\": 28,\n    \"weight\": 34,\n    \"biography\": \"biography01\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -307,7 +307,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/characters/7",
+					"raw": "http://localhost:8080/characters/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -315,7 +315,7 @@
 					"port": "8080",
 					"path": [
 						"characters",
-						"7"
+						"1"
 					]
 				}
 			},
@@ -328,7 +328,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"image\": \"dasd\",\n    \"title\": \"dasd\",\n    \"creationDate\": \"2020/03/21\",\n    \"star\": 4\n}",
+					"raw": "{\n    \"image\": \"dasd\",\n    \"title\": \"dasd\",\n    \"creationDate\": \"2020/09/10\",\n    \"star\": 2\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -364,7 +364,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/movies/13",
+					"raw": "http://localhost:8080/movies/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -372,7 +372,7 @@
 					"port": "8080",
 					"path": [
 						"movies",
-						"13"
+						"1"
 					]
 				}
 			},
@@ -385,7 +385,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": 13,\n    \"image\": \"theMickeyworld.jpg\",\n    \"title\": \"The World of Mickey\",\n    \"creationDate\": \"1970/10/01\",\n    \"star\": 3,\n    \"characters\": [],\n    \"genres\": []\n}",
+					"raw": "{\n    \"id\": 13,\n    \"image\": \"/usr/tmp/MickeyMouseMovie.jpg\",\n    \"title\": \"Mickey Mouse Movie\",\n    \"creationDate\": \"1979/02/01\",\n    \"star\": 5,\n    \"characters\": [],\n    \"genres\": []\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -425,7 +425,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/movies/13",
+					"raw": "http://localhost:8080/movies/1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -433,7 +433,7 @@
 					"port": "8080",
 					"path": [
 						"movies",
-						"13"
+						"1"
 					]
 				}
 			},
