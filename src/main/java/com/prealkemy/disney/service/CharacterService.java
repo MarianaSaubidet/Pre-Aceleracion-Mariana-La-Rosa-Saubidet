@@ -2,7 +2,7 @@ package com.prealkemy.disney.service;
 
 import com.prealkemy.disney.dto.CharacterDTO;
 import com.prealkemy.disney.dto.CharacterDTOBasic;
-import com.prealkemy.disney.entity.CharacterEntity;
+import com.prealkemy.disney.entity.Character;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +11,7 @@ import java.util.Set;
 @Service
 public interface CharacterService {
     public List<CharacterDTO> getAll();
+
     List<CharacterDTOBasic> getBasicCharList();
 
     public void delete(Long id);
@@ -21,7 +22,7 @@ public interface CharacterService {
 
     public CharacterDTO save(CharacterDTO charDTO);
 
-    public CharacterEntity getById(Long id);
+    public Character getById(Long id);
 
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies, String order);
 

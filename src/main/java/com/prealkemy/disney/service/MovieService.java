@@ -2,7 +2,7 @@ package com.prealkemy.disney.service;
 
 import com.prealkemy.disney.dto.MovieDTO;
 import com.prealkemy.disney.dto.MovieDTOBasic;
-import com.prealkemy.disney.entity.MovieEntity;
+import com.prealkemy.disney.entity.Movie;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +28,7 @@ public interface MovieService {
 
     void addCharacter(Long movieId, Long characterId);
 
-    MovieEntity getById(Long id);
+    Movie getById(Long id);
 
     MovieDTO getByDetails(Long id);
 

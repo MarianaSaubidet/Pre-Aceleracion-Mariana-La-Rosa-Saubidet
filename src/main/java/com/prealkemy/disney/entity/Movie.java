@@ -12,31 +12,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "movie")
+@Table(name = "movies")
 @SQLDelete(sql = "UPDATE move SET deleted = true WHERE id=?")
 @Where(clause ="deleted=false")
 
 @Getter
 @Setter
-public class MovieEntity {
+public class Movie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
     private String image;
     private String title;
 
     @Column(name = "date_of_creation")
-    @DateTimeFormat(pattern = "yyy/mm/dd")
+    @DateTimeFormat(pattern = "yyyy/mm/dd")
     private LocalDate creationDate;
 
     private Integer star;
-
-
-    // @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    // @JoinColumn(name = "genre_id", insertable = false, updatable = false)
-    // private GenreEntity genre;
 
 
     //TABLA INTERMEDIA MOVIES & CHARACTERS
@@ -44,7 +39,7 @@ public class MovieEntity {
     @JoinTable(name = "movie_chars",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "character_id"))
-    private List<CharacterEntity> characters = new ArrayList<>();
+    private List<Character> characters = new ArrayList<>();
 
     //TABLA INTERMEDIA MOVIES & GENRES
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -52,28 +47,28 @@ public class MovieEntity {
             name = "movie_genres",
             joinColumns= @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<GenreEntity> genres = new ArrayList<>();
+    private List<Genre> genres = new ArrayList<>();
 
     //SOFT DELETE
     private boolean deleted = Boolean.FALSE;
 
     //ADD CHARACTER
-    public void addCharacter(CharacterEntity character) {
+    public void addCharacter(Character character) {
         this.characters.add(character);
     }
 
     //REMOVE CHARACTER
-    public void removeCharacter(CharacterEntity character) {
+    public void removeCharacter(Character character) {
         this.characters.remove(character);
     }
 
     // ADD GENRE
-    public void addGenre(GenreEntity genre) {
+    public void addGenre(Genre genre) {
         this.genres.add(genre);
     }
 
     //REMOVE GENRE
-    public void removeGenre(GenreEntity genre) {
+    public void removeGenre(Genre genre) {
         this.genres.remove(genre);
     }
 
@@ -83,7 +78,7 @@ public class MovieEntity {
             return false;
         if(getClass() != obj.getClass())
             return false;
-        final MovieEntity other = (MovieEntity) obj;
+        final Movie other = (Movie) obj;
         return other.id == this.id;
     }
 }

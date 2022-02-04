@@ -1,7 +1,7 @@
 package com.prealkemy.disney.service.impl;
 
 import com.prealkemy.disney.dto.GenreDTO;
-import com.prealkemy.disney.entity.GenreEntity;
+import com.prealkemy.disney.entity.Genre;
 import com.prealkemy.disney.exception.ParamNotFound;
 import com.prealkemy.disney.mapper.GenreMapper;
 import com.prealkemy.disney.repository.GenreRepository;
@@ -26,10 +26,10 @@ public class GenreServiceImpl implements GenreService {
         //TODO: Guardar Género
 
         // Convierto ContinentDTO a entity
-        GenreEntity genreEntity = genreMapper.genreDTO2Entity(dto);
+        Genre genreEntity = genreMapper.genreDTO2Entity(dto);
 
         //la entidad guardada con Id, imagen, y nombre, en forma de entidad.
-        GenreEntity genreSaved = genreRepository.save(genreEntity);
+        Genre genreSaved = genreRepository.save(genreEntity);
 
         //Como el controller maneja DTO debemos convertirla en un DTO.
         //Vuelvo a convertir la entidad guardada en DTO.
@@ -39,26 +39,27 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public List<GenreDTO> getAllGenres() {
-        List<GenreEntity> entities = genreRepository.findAll();
+        List<Genre> entities = genreRepository.findAll();
         List<GenreDTO> result = genreMapper.genreEntityList2DTOList(entities);
         return result;
     }
 
     @Override
     public void deleteGenreById(Long id) {
+        this.genreRepository.deleteById(id);
        }
 
     @Override
     public GenreDTO modify(Long id, GenreDTO genreDTO) {
-        GenreEntity savedGenre = this.getById(id);
+        Genre savedGenre = this.getById(id);
         savedGenre.setName(genreDTO.getName());
-        GenreEntity editedGenre = genreRepository.save(savedGenre);
+        Genre editedGenre = genreRepository.save(savedGenre);
         GenreDTO result = genreMapper.genreEntity2DTO(editedGenre);
         return result;
     }
 
-    private GenreEntity getById(Long id) {
-        Optional<GenreEntity> toBeFound = genreRepository.findById(id);
+    private Genre getById(Long id) {
+        Optional<Genre> toBeFound = genreRepository.findById(id);
         if(!toBeFound.isPresent()) {
             throw new ParamNotFound("THIS GENRE DOES NOT EXIST: " + id);
         }

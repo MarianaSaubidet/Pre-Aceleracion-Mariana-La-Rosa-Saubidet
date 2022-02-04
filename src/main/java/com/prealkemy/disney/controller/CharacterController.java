@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
-@RequestMapping("characters")
+@RequestMapping("/characters")
 @Controller
 public class CharacterController {
 
@@ -32,8 +32,8 @@ public class CharacterController {
 
     @GetMapping("/all")
     public ResponseEntity<List<CharacterDTO>> getAll(){
-        List<CharacterDTO> characters = this.characterService.getAll();
-        return ResponseEntity.ok(characters);
+        List<CharacterDTO> charactersList = this.characterService.getAll();
+        return ResponseEntity.ok(charactersList);
     }
     @GetMapping("/{id}")
     public ResponseEntity<CharacterDTO> getDetailsById(@PathVariable Long id) {

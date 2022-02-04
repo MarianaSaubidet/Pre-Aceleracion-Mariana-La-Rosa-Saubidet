@@ -11,24 +11,25 @@ import java.util.List;
 
 @Entity
 @Table(name = "genres")
-@SQLDelete(sql = "UPDATE genres SET deleted = true WHERE id=?")
-@Where(clause = "deleted = false")
-
 @Getter
 @Setter
 
-public class GenreEntity {
+@SQLDelete(sql = "UPDATE genres SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
+
+public class Genre {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
 
     @Column(nullable = false)
     private String name;
+    private String image;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "genres")
-    private List<MovieEntity> movies = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
 
     //SOFT DELETE
     private boolean deleted = Boolean.FALSE;

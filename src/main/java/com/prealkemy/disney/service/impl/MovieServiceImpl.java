@@ -3,8 +3,8 @@ package com.prealkemy.disney.service.impl;
 import com.prealkemy.disney.dto.MovieDTO;
 import com.prealkemy.disney.dto.MovieDTOBasic;
 import com.prealkemy.disney.dto.MovieDTOFilter;
-import com.prealkemy.disney.entity.CharacterEntity;
-import com.prealkemy.disney.entity.MovieEntity;
+import com.prealkemy.disney.entity.Character;
+import com.prealkemy.disney.entity.Movie;
 import com.prealkemy.disney.exception.ParamNotFound;
 import com.prealkemy.disney.mapper.CharMapper;
 import com.prealkemy.disney.mapper.MovieMapper;
@@ -41,8 +41,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDTO save(MovieDTO movie) {
-        MovieEntity movieEntity = movieMapper.movieDTO2Entity(movie, true);
-        MovieEntity movieSaved = movieRepository.save(movieEntity);
+        Movie movieEntity = movieMapper.movieDTO2Entity(movie, true);
+        Movie movieSaved = movieRepository.save(movieEntity);
         MovieDTO result = movieMapper.movieEntity2DTO(movieSaved, false);
 
         return result;
@@ -50,7 +50,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDTO> getAllMovies() {
-        List<MovieEntity> entities = movieRepository.findAll();
+        List<Movie> entities = movieRepository.findAll();
         List<MovieDTO> result = movieMapper.movieEntityList2DTOList(entities, true);
 
         return result;
@@ -58,7 +58,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<MovieDTOBasic> getBasicList() {
-        List<MovieEntity> movieList = movieRepository.findAll();
+        List<Movie> movieList = movieRepository.findAll();
         List<MovieDTOBasic> resultDTO = movieMapper.entityList2BasicDTO(movieList);
         return resultDTO;
     }
@@ -70,7 +70,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDTO modify(Long id, MovieDTO movieDTO) {
-        MovieEntity savedMovie = this.getById(id);
+        Movie savedMovie = this.getById(id);
 
         savedMovie.setImage(movieDTO.getImage());
         savedMovie.setTitle(movieDTO.getTitle());
@@ -82,7 +82,7 @@ public class MovieServiceImpl implements MovieService {
 
         savedMovie.setStar(movieDTO.getStar());
 
-        MovieEntity movieEntity = movieRepository.save(savedMovie);
+        Movie movieEntity = movieRepository.save(savedMovie);
         MovieDTO result = movieMapper.movieEntity2DTO(movieEntity, false);
 
         return result;
@@ -90,10 +90,10 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void addCharacter(Long movieId, Long characterId) {
-        MovieEntity movieEntity = this.getById(movieId);
+        Movie movieEntity = this.getById(movieId);
         movieEntity.getCharacters().size();
 
-        CharacterEntity character = characterService.getById(characterId);
+        Character character = characterService.getById(characterId);
         movieEntity.addCharacter(character);
         movieRepository.save(movieEntity);
     }
@@ -101,14 +101,14 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<MovieDTO> getByFilters(String title, Set<Long> genre, String order) {
         MovieDTOFilter movieFilters = new MovieDTOFilter(title, genre, order);
-        List<MovieEntity> entityList = movieRepository.findAll(movieSpecification.getFiltered(movieFilters));
+        List<Movie> entityList = movieRepository.findAll(movieSpecification.getFiltered(movieFilters));
         List<MovieDTO> result = movieMapper.movieEntityList2DTOList(entityList, true);
         return result;
     }
 
     @Override
-    public MovieEntity getById(Long id) {
-        Optional<MovieEntity> movieEntity = movieRepository.findById(id);
+    public Movie getById(Long id) {
+        Optional<Movie> movieEntity = movieRepository.findById(id);
         if(!movieEntity.isPresent()) {
             throw new ParamNotFound("THIS MOVIE DOES NOT EXIST.");
         }
@@ -117,7 +117,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public MovieDTO getByDetails(Long id) {
-        MovieEntity movieEntity = this.getById(id);
+        Movie movieEntity = this.getById(id);
         MovieDTO result = movieMapper.movieEntity2DTO(movieEntity, true);
         return result;
     }

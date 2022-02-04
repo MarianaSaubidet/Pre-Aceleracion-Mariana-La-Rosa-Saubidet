@@ -11,17 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Set;
 
-@RequestMapping("movies")
+@RequestMapping("/movies")
 @Controller
 public class MovieController {
     @Autowired
     private MovieService movieService;
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<MovieDTO>> getAllDetails() {
-
-        List<MovieDTO> movies = movieService.getAllMovies();
-        return ResponseEntity.ok().body(movies);
+        List<MovieDTO> moviesList = movieService.getAllMovies();
+        return ResponseEntity.ok().body(moviesList);
     }
 
     @PostMapping

@@ -2,7 +2,7 @@ package com.prealkemy.disney.mapper;
 
 import com.prealkemy.disney.dto.MovieDTO;
 import com.prealkemy.disney.dto.MovieDTOBasic;
-import com.prealkemy.disney.entity.MovieEntity;
+import com.prealkemy.disney.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +20,8 @@ public class MovieMapper {
     @Autowired
     private GenreMapper genreMapper;
 
-    public MovieEntity movieDTO2Entity(MovieDTO dto,  boolean loadChar) {
-        MovieEntity movieEntity = new MovieEntity();
+    public Movie movieDTO2Entity(MovieDTO dto, boolean loadChar) {
+        Movie movieEntity = new Movie();
 
         movieEntity.setImage(dto.getImage());
         movieEntity.setTitle(dto.getTitle());
@@ -37,7 +37,7 @@ public class MovieMapper {
     }
 
     //ESTO EVITA EL BUCLE INFINITO Y PUEDO MOSTRARLO
-    public MovieDTO movieEntity2DTO(MovieEntity movieEntity, boolean loadChar) {
+    public MovieDTO movieEntity2DTO(Movie movieEntity, boolean loadChar) {
         MovieDTO dto = new MovieDTO();
 
         dto.setId(movieEntity.getId());
@@ -60,17 +60,17 @@ public class MovieMapper {
 
     }
 
-    public List<MovieDTO> movieEntityList2DTOList(List<MovieEntity> entities, boolean load) {
+    public List<MovieDTO> movieEntityList2DTOList(List<Movie> entities, boolean load) {
         List<MovieDTO> dtos = new ArrayList<>();
 
-        for (MovieEntity entity: entities) {
+        for (Movie entity: entities) {
             dtos.add(this.movieEntity2DTO(entity, load));
         }
         return dtos;
     }
 
-    public List<MovieEntity> movieDTOList2EntityList(List<MovieDTO> dtoList, boolean load) {
-        List<MovieEntity> entities = new ArrayList<>();
+    public List<Movie> movieDTOList2EntityList(List<MovieDTO> dtoList, boolean load) {
+        List<Movie> entities = new ArrayList<>();
 
         for (MovieDTO dto: dtoList) {
             entities.add(this.movieDTO2Entity(dto, load));
@@ -78,7 +78,7 @@ public class MovieMapper {
         return entities;
     }
 
-    public MovieDTOBasic entity2BasicDTO(MovieEntity movieEntity) {
+    public MovieDTOBasic entity2BasicDTO(Movie movieEntity) {
         MovieDTOBasic dto = new MovieDTOBasic();
 
         dto.setImage(movieEntity.getImage());
@@ -91,9 +91,9 @@ public class MovieMapper {
         return dto;
     }
 
-    public List<MovieDTOBasic> entityList2BasicDTO(List<MovieEntity> entities) {
+    public List<MovieDTOBasic> entityList2BasicDTO(List<Movie> entities) {
         List<MovieDTOBasic> newList = new ArrayList<>();
-        for(MovieEntity entity : entities) {
+        for(Movie entity : entities) {
             newList.add(this.entity2BasicDTO(entity));
         }
         return newList;

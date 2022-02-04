@@ -3,8 +3,8 @@ package com.prealkemy.disney.mapper;
 import com.prealkemy.disney.dto.CharacterDTO;
 import com.prealkemy.disney.dto.CharacterDTOBasic;
 import com.prealkemy.disney.dto.MovieDTO;
-import com.prealkemy.disney.entity.CharacterEntity;
-import com.prealkemy.disney.entity.MovieEntity;
+import com.prealkemy.disney.entity.Character;
+import com.prealkemy.disney.entity.Movie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,8 +17,8 @@ public class CharMapper {
     private MovieMapper movieMapper;
 
     //
-    public CharacterEntity charDTO2Entity(CharacterDTO dto){
-        CharacterEntity characterEntity = new CharacterEntity();
+    public Character charDTO2Entity(CharacterDTO dto){
+        Character characterEntity = new Character();
 
         characterEntity.setName(dto.getName());
         characterEntity.setImage(dto.getImage());
@@ -29,7 +29,7 @@ public class CharMapper {
     }
 
     //
-    public CharacterDTO charEntity2DTO(CharacterEntity characterEntity, boolean loadMovie) {
+    public CharacterDTO charEntity2DTO(Character characterEntity, boolean loadMovie) {
         CharacterDTO dto = new CharacterDTO();
 
         dto.setId(characterEntity.getId());
@@ -41,7 +41,7 @@ public class CharMapper {
 
         if(loadMovie) {
             List<MovieDTO> dtoList = new ArrayList<>();
-            for (MovieEntity entity : characterEntity.getMovies()) {
+            for (Movie entity : characterEntity.getMovies()) {
                 dtoList.add(movieMapper.movieEntity2DTO(entity,false));
             }
             dto.setMovies(dtoList);
@@ -50,18 +50,18 @@ public class CharMapper {
     }
 
     //
-    public List<CharacterDTO> charEntityList2DTOList(List<CharacterEntity> entities, boolean loadMovie) {
+    public List<CharacterDTO> charEntityList2DTOList(List<Character> entities, boolean loadMovie) {
         List<CharacterDTO> dtoList = new ArrayList<>();
 
-        for (CharacterEntity entity: entities) {
+        for (Character entity: entities) {
             dtoList.add(charEntity2DTO(entity, loadMovie));
         }
         return dtoList;
     }
 
     //
-    public Set<CharacterEntity> charDTOList2EntityList(Set<CharacterDTO> dtoSet) {
-        Set<CharacterEntity> entitySet = new HashSet<>();
+    public Set<Character> charDTOList2EntityList(Set<CharacterDTO> dtoSet) {
+        Set<Character> entitySet = new HashSet<>();
         for (CharacterDTO dto: dtoSet) {
             entitySet.add(charDTO2Entity(dto));
         }
@@ -69,11 +69,11 @@ public class CharMapper {
     }
 
     //
-    public List<CharacterDTOBasic> basicEntityList2DTOBasicList(Collection<CharacterEntity> entities) {
+    public List<CharacterDTOBasic> basicEntityList2DTOBasicList(Collection<Character> entities) {
         List<CharacterDTOBasic> basicList = new ArrayList<>();
         CharacterDTOBasic dtoBasic;
 
-        for (CharacterEntity entity: entities) {
+        for (Character entity: entities) {
             dtoBasic = new CharacterDTOBasic();
             dtoBasic.setId(entity.getId());
             dtoBasic.setName(entity.getName());
@@ -85,7 +85,7 @@ public class CharMapper {
     }
 
     //
-    private CharacterDTOBasic charEntity2BasicDTO(CharacterEntity charEntity) {
+    private CharacterDTOBasic charEntity2BasicDTO(Character charEntity) {
         CharacterDTOBasic dto = new CharacterDTOBasic();
 
         dto.setImage(charEntity.getImage());

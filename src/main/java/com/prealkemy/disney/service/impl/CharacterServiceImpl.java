@@ -3,8 +3,8 @@ package com.prealkemy.disney.service.impl;
 import com.prealkemy.disney.dto.CharacterDTO;
 import com.prealkemy.disney.dto.CharacterDTOBasic;
 import com.prealkemy.disney.dto.CharacterDTOFilter;
-import com.prealkemy.disney.entity.CharacterEntity;
-import com.prealkemy.disney.entity.MovieEntity;
+import com.prealkemy.disney.entity.Character;
+import com.prealkemy.disney.entity.Movie;
 import com.prealkemy.disney.exception.ParamNotFound;
 import com.prealkemy.disney.mapper.CharMapper;
 import com.prealkemy.disney.mapper.MovieMapper;
@@ -34,21 +34,21 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public List<CharacterDTO> getAll() {
-        List<CharacterEntity> charEntities = charRepository.findAll();
+        List<Character> charEntities = charRepository.findAll();
         List<CharacterDTO> dtoList = charMapper.charEntityList2DTOList(charEntities, true);
         return dtoList;
     }
 
     @Override
     public List<CharacterDTOBasic> getBasicCharList() {
-        List<CharacterEntity> charList = charRepository.findAll();
+        List<Character> charList = charRepository.findAll();
         List<CharacterDTOBasic> resultDTO = charMapper.basicEntityList2DTOBasicList(charList);
         return resultDTO;
     }
 
     @Override
     public CharacterDTO modify(Long id, CharacterDTO charDTO) {
-        CharacterEntity savedChar = this.getById(id);
+        Character savedChar = this.getById(id);
 
         savedChar.setName(charDTO.getName());
         savedChar.setImage(charDTO.getImage());
@@ -58,7 +58,7 @@ public class CharacterServiceImpl implements CharacterService {
 
         savedChar.setMovies(movieMapper.movieDTOList2EntityList(charDTO.getMovies(), false));
 
-        CharacterEntity editedChar = charRepository.save(savedChar);
+        Character editedChar = charRepository.save(savedChar);
 
         CharacterDTO savedDTO = charMapper.charEntity2DTO(editedChar, false);
 
@@ -67,7 +67,7 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public CharacterDTO save(CharacterDTO charDTO) {
-        CharacterEntity charEntity = new CharacterEntity();
+        Character charEntity = new Character();
 
         charEntity.setName(charDTO.getName());
         charEntity.setImage(charDTO.getImage());
@@ -75,15 +75,15 @@ public class CharacterServiceImpl implements CharacterService {
         charEntity.setWeight(charDTO.getWeight());
         charEntity.setBiography(charDTO.getBiography());
 
-        CharacterEntity savedChar = charRepository.save(charEntity);
+        Character savedChar = charRepository.save(charEntity);
         CharacterDTO savedDTO = charMapper.charEntity2DTO(savedChar, false);
 
         return savedDTO;
     }
 
     @Override
-    public CharacterEntity getById(Long id) {
-        Optional<CharacterEntity> character = charRepository.findById(id);
+    public Character getById(Long id) {
+        Optional<Character> character = charRepository.findById(id);
         if(!character.isPresent()) {
             throw new ParamNotFound("THIS CHARACTER DOES NOT EXIST.");
         }
@@ -99,7 +99,7 @@ public class CharacterServiceImpl implements CharacterService {
     public List<CharacterDTO> getByFilters(String name, Integer age, Set<Long> movies, String order) {
         CharacterDTOFilter charFilter = new CharacterDTOFilter(name, age, movies, order);
 
-        List<CharacterEntity> entities = this.charRepository.findAll(this.charSpecification.getByFilters(charFilter));
+        List<Character> entities = this.charRepository.findAll(this.charSpecification.getByFilters(charFilter));
         List<CharacterDTO> result = this.charMapper.charEntityList2DTOList(entities,true);
 
         return result;
@@ -107,25 +107,25 @@ public class CharacterServiceImpl implements CharacterService {
 
     @Override
     public CharacterDTO getDetailById(Long id) {
-        CharacterEntity charEntity = this.getById(id);
+        Character charEntity = this.getById(id);
         CharacterDTO result = charMapper.charEntity2DTO(charEntity, true);
         return result;
     }
 
     @Override
     public void addMovie(Long id, Long idMovie) {
-        CharacterEntity charEntity = charRepository.getById(id);
+        Character charEntity = charRepository.getById(id);
         charEntity.getMovies().size();
-        MovieEntity movie = this.movieService.getById(idMovie);
+        Movie movie = this.movieService.getById(idMovie);
         charEntity.addMovie(movie);
         this.charRepository.save(charEntity);
     }
 
     @Override
     public void removeMovie(Long id, Long idMovie) {
-        CharacterEntity charEntity = charRepository.getById(id);
+        Character charEntity = charRepository.getById(id);
         charEntity.getMovies().size();
-        MovieEntity movie = this.movieService.getById(idMovie);
+        Movie movie = this.movieService.getById(idMovie);
         charEntity.removeMovie(movie);
         this.charRepository.save(charEntity);
     }

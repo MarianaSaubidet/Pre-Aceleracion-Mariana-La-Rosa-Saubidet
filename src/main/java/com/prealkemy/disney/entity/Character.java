@@ -11,15 +11,15 @@ import java.util.List;
 
 @Entity
 @Table(name = "characters")
-@SQLDelete(sql = "UPDATE character SET deleted = true WHERE id=?")
-@Where(clause = "deleted = false")
-
 @Getter
 @Setter
 
-public class CharacterEntity {
+@SQLDelete(sql = "UPDATE character SET deleted = true WHERE id=?")
+@Where(clause = "deleted = false")
+
+public class Character {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
 
@@ -31,18 +31,18 @@ public class CharacterEntity {
     private String biography;
 
     @ManyToMany(mappedBy = "characters", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<MovieEntity> movies = new ArrayList<>();
+    private List<Movie> movies = new ArrayList<>();
 
     //SOFT DELETE
-    private Boolean deleted = Boolean.FALSE;
+    private boolean deleted = Boolean.FALSE;
 
     //ADD
-    public void addMovie(MovieEntity movie) {
+    public void addMovie(Movie movie) {
         this.movies.add(movie);
     }
 
     //REMOVE
-    public void removeMovie(MovieEntity movie) {
+    public void removeMovie(Movie movie) {
         this.movies.remove(movie);
     }
 }

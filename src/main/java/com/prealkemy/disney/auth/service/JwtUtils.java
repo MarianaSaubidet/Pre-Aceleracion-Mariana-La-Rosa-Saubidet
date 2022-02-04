@@ -40,7 +40,9 @@ public class JwtUtils {
     private String createToken(Map<String, Object> claims, String subject) {
 
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                // Multiplicandolo asi logramos que el TOKEN valga por 10 horas
+                // Multiplicandolo asi logramos que el TOKEN valga por  ----  10 horas   -----
+                // Observacion Entrega #3: Cambiar las 10 horas a una variable
+                // .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * expirationInHours))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
